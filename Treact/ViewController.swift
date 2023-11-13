@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     var gameLabel: UILabel!
     var timerButton: UIButton!
     
+    var timer: Timer = Timer()
     var timerStarted = false
     var counter = 0
     var TimeString = "00 : 00 : 00"
@@ -74,17 +75,15 @@ class ViewController: UIViewController {
     }
     
     @objc func startTapped(_ sender: UIButton) {
-        
-        timerButton.setTitle("\(TimeString)", for: .normal)
-        
-        // Create a CABasicAnimation to change the border color
-        let colorAnimation = CABasicAnimation(keyPath: "borderColor")
-        colorAnimation.fromValue = UIColor.red.cgColor
-        colorAnimation.toValue = UIColor.green.cgColor
-        colorAnimation.duration = 10.0 // 10 seconds
-
-        // Add the animation to the button's layer
-        timerButton.layer.add(colorAnimation, forKey: "borderColorAnimation")
+        if (timerStarted) {
+            counter = 0
+            timerStarted = false
+            timer.invalidate()
+        } else {
+            timerStarted = true
+            timer = Timer.scheduledTimer(timeInterval: 0.01, target: self, selector: #selector(timerCounter), userInfo: nil, repeats: true)
+        }
+//        timerButton.setTitle("\(TimeString)", for: .normal)
         
         // Create a CABasicAnimation to change the background color
         let backgroundColorAnimation = CABasicAnimation(keyPath: "backgroundColor")
@@ -95,6 +94,25 @@ class ViewController: UIViewController {
         // Add the animation to the button's layer
         timerButton.layer.add(backgroundColorAnimation, forKey: "backgroundColorAnimation")
     }
+    
+    @objc func timerCounter() -> Void {
+        counter += 1
+        let time = convertSeconds(seconds: counter)
+        let timeStirng = generateTimeString(hours: time.hours, minutes: time.minutes, seconds: time.seconds)
+        timerButton.setTitle(timeStirng, for: .normal)
+      }
+      
+      func convertSeconds(seconds: Int) -> (hours: Int, minutes: Int, seconds: Int) {
+        return (seconds / 3600, (seconds % 3600) / 60, ((seconds % 3600) % 60))
+      }
+      
+      func generateTimeString(hours: Int, minutes: Int, seconds: Int) -> String {
+        var timeString = ""
+        timeString += String(format: "%02d", hours) + " : " +
+                      String(format: "%02d", minutes) + " : " +
+                      String(format: "%02d", seconds)
+        return timeString
+      }
 
 }
 
