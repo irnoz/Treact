@@ -28,32 +28,17 @@ class ViewController: UIViewController {
         timerButton = UIButton(type: .system)
         timerButton.translatesAutoresizingMaskIntoConstraints = false
         timerButton.setTitle("START", for: .normal)
+        timerButton.setTitleColor(.white, for: .normal)
         view.addSubview(timerButton)
         timerButton.addTarget(self, action: #selector(startTapped), for: .touchUpInside)
         
         // Start button border
-        timerButton.layer.borderColor = UIColor.blue.cgColor
+        timerButton.layer.borderColor = UIColor.clear.cgColor
         timerButton.layer.borderWidth = 1.5
         timerButton.layer.cornerRadius = 50.0 // height / 2
         timerButton.layer.masksToBounds = true
         
-        // Start button border animation
-        let colorAnimation = CABasicAnimation(keyPath: "borderColor")
-        colorAnimation.fromValue = UIColor.red.cgColor
-        colorAnimation.toValue = UIColor.green.cgColor
-        colorAnimation.duration = 5.0 // 5 seconds
-
-        // Add the animation to the button's layer
-        timerButton.layer.add(colorAnimation, forKey: "borderColorAnimation")
         
-        // Create a CABasicAnimation to change the background color
-        let backgroundColorAnimation = CABasicAnimation(keyPath: "backgroundColor")
-        backgroundColorAnimation.fromValue = UIColor.red.cgColor
-        backgroundColorAnimation.toValue = UIColor.green.cgColor
-        backgroundColorAnimation.duration = 5.0 // 5 seconds
-
-        // Add the animation to the button's layer
-        timerButton.layer.add(backgroundColorAnimation, forKey: "backgroundColorAnimation")
 
         NSLayoutConstraint.activate([
             timerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -64,7 +49,26 @@ class ViewController: UIViewController {
     }
     
     @objc func startTapped(_ sender: UIButton) {
-        print("button tapped")
+        
+        timerButton.setTitle("\(TimeString)", for: .normal)
+        
+        // Create a CABasicAnimation to change the border color
+        let colorAnimation = CABasicAnimation(keyPath: "borderColor")
+        colorAnimation.fromValue = UIColor.red.cgColor
+        colorAnimation.toValue = UIColor.green.cgColor
+        colorAnimation.duration = 10.0 // 10 seconds
+
+        // Add the animation to the button's layer
+        timerButton.layer.add(colorAnimation, forKey: "borderColorAnimation")
+        
+        // Create a CABasicAnimation to change the background color
+        let backgroundColorAnimation = CABasicAnimation(keyPath: "backgroundColor")
+        backgroundColorAnimation.fromValue = UIColor.red.cgColor
+        backgroundColorAnimation.toValue = UIColor.green.cgColor
+        backgroundColorAnimation.duration = 10.0 // 10 seconds
+
+        // Add the animation to the button's layer
+        timerButton.layer.add(backgroundColorAnimation, forKey: "backgroundColorAnimation")
     }
 
 }
