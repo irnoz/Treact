@@ -9,6 +9,8 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    var scoreLabel: UILabel!
+    var gameLabel: UILabel!
     var timerButton: UIButton!
     
     var timerStarted = false
@@ -23,6 +25,23 @@ class ViewController: UIViewController {
     override func loadView() {
         view = UIView()
         view.backgroundColor = .black
+        
+        scoreLabel = UILabel()
+        scoreLabel.translatesAutoresizingMaskIntoConstraints = false
+        scoreLabel.textAlignment = .right
+        scoreLabel.textColor = .white
+        scoreLabel.text = "Score: 0"
+        view.addSubview(scoreLabel)
+        
+        // gameLabel
+        gameLabel = UILabel()
+        gameLabel.translatesAutoresizingMaskIntoConstraints = false
+        gameLabel.textAlignment = .center
+        gameLabel.textColor = .white
+        gameLabel.font = .boldSystemFont(ofSize: 24)
+        gameLabel.numberOfLines = 0
+        gameLabel.text = "To play press start and try to \npress after exactly 10 seconds"
+        view.addSubview(gameLabel)
         
         // Start button
         timerButton = UIButton(type: .system)
@@ -41,6 +60,12 @@ class ViewController: UIViewController {
         
 
         NSLayoutConstraint.activate([
+            scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
+            scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: 0),
+            
+            gameLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor, constant: 16),
+            gameLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
             timerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             timerButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             timerButton.heightAnchor.constraint(equalToConstant: 100),
