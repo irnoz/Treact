@@ -24,20 +24,20 @@ class ViewController: UIViewController {
         view = UIView()
         view.backgroundColor = .black
         
-        // Start Button
+        // Start button
         timerButton = UIButton(type: .system)
         timerButton.translatesAutoresizingMaskIntoConstraints = false
         timerButton.setTitle("START", for: .normal)
         view.addSubview(timerButton)
         timerButton.addTarget(self, action: #selector(startTapped), for: .touchUpInside)
         
-        // Start Button Border
+        // Start button border
         timerButton.layer.borderColor = UIColor.blue.cgColor
         timerButton.layer.borderWidth = 1.5
         timerButton.layer.cornerRadius = 50.0 // height / 2
         timerButton.layer.masksToBounds = true
         
-        // Start Button Border Anumation
+        // Start button border animation
         let colorAnimation = CABasicAnimation(keyPath: "borderColor")
         colorAnimation.fromValue = UIColor.red.cgColor
         colorAnimation.toValue = UIColor.green.cgColor
